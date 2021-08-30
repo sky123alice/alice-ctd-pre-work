@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8"/>
+    <title>Films</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-wrapper">
+            <div class="left-side">
+                <div class="nav-link-wrapper">
+                    <a href="home.html">Home</a>
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="Films.html">Films</a>
+                </div>
+                <div class="nav-link-wrapper">
+                    <a href="People.html">People</a>
+                </div>
+            </div>
+
+            <div class="right-side">
+                <div class="brand">
+                    <div>Alice Lee</div>
+                </div>
+            </div>  
+        </div>
+
+        <div class = "api-contents">
+
+            <div id="app"></div>
+            
+        </div>
+    </div>
+
+</body>
+
+
+</html>
+<script> 
+    
+    function fetchFilmData(){
+        fetch("https://swapi.dev/api/films")
+        .then(response =>{
+            if(!response.ok){
+                throw Error("ERROR");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const html = data.results.map(film =>{
+                console.log(data.results);
+                return `
+                <div class = "films">
+                    <h1>Title: ${film.title}</h1>
+                    <p>Episode: ${film.episode_id}</p>
+                    <p>Opening crawl: ${film.opening_crawl}</p>
+                    <p>Director: ${film.director}</p>
+                    <p>Producer: ${film.producer}</p>
+                    <p>Release Date: ${film.release_date}</p>
+                    <p>Characters: ${film.characters}</p>
+                    <p>Planets: ${film.planets}</p>
+                    <p>Starships: ${film.starships}</p>
+                    <p>Vehicles: ${film.vehicles}</p>
+                    <p>Species: ${film.species}</p></br></br>
+                    
+                </div>`;
+            })
+            .join("");
+            document.querySelector("#app").insertAdjacentHTML("afterbegin", html);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    };
+    
+fetchFilmData();
+    
+
+
+</script>
